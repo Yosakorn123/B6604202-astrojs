@@ -1,0 +1,38 @@
+---
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import Layout from '../layouts/Layout.astro';
+
+const API_URL: string = 'https://pokeapi.co/api/v2/pokemon';
+
+const response = await fetch(`${API_URL}?limit=30`);
+const data = await response.json();
+const pokemonList = data.results;
+
+console.log(pokemonList)
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+	<Header/>
+
+	<section style="text-align: center;">
+		<header>
+			<h2>Pokemon List</h2>
+		</header>
+		<!-- Pokemon List -->
+		 
+			{pokemonList.map((pokemon: { name: string; }, index: number) => (
+				
+					<a href={`/pokemon/${index + 1}`}>{pokemon.name}</a><br/>
+				
+			))}
+		 
+	 </section>
+
+	<!-- End: Pokemon List -->
+
+	<Footer/>
+</Layout>
